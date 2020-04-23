@@ -9,5 +9,14 @@
     },
     "keywords": [],
     "author": "",
-    "license": ""
+    "license": "",
+    "dependencies": {
+      "express": "^4.16.4",
+      "jquery": "^3.4.0",
+      "morgan": "^1.9.1",
+      "popper.js": "^1.14.7",
+      "pug": "^2.0.3",
+      "socket.io": "^2.2.0",
+      "webpack-cli": "^3.2.3"
+    }
   }
