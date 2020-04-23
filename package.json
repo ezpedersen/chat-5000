@@ -1,0 +1,13 @@
+  {
+    "name": "chat-5000",
+    "description": "extra spicy",
+    "version": "1.0.0",
+    "main": "server.js",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/AsianGang1/chat-5000"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "",
+  }
