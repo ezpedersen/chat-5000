@@ -5,7 +5,7 @@ var socketIO = require('socket.io');
 var app = express();
 var server = http.Server(app);
 var io = socketIO(server); 
-var port = process.env.PORT || 5000;
+var port = /**process.env.PORT || **/ 5000;
 app.set('port', port);
 app.use(express.static('client'));
 server.listen(port, function() {
