@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <script src="/socket.io/socket.io.js"></script>
+        <title>Chat 5000</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <div id="server">
+            <div id="chat" readonly></div>
+            <input id="input" placeholder="Enter Message Here" maxlength="150">
+            <button onclick="send()" id="send">Send</button>
+        </div>
+        <div id="banned">
+            <h1>Looks Like You've Been Removed From The Server!</h1>
+            <h1 class="face">¯\_(ツ)_/¯</h1>
+        </div>
+        <div id="hijacked">
+            <h1>You've Been Hijacked By The Admin!</h1>
+            <h1 class="face">🤪</h1>
+        </div>
+    </body>
+	<script src="client.js"></script>
+</html>
