@@ -22,26 +22,26 @@ io.on('connection', function(socket) {
         person.name = name;
         person.impostername = "";
         person.rank = "";
-        if(totaltext==""){
-            person.rank = "admin";
-            admin = person.name;
-            console.log(admin);
-            totaltext="<span style='color:darkred; font-weight: bold;'>[ADMIN] "+name+"</span>" + " joined the chat";
-        }
-        else{
-            totaltext+="<br>"+name+" joined the chat.";
-        }
+		if(personList == []){
+			totaltext+="<span style='color: lime'>>> </span>"+name+" joined the chat.";
+		}
+		else{
+			totaltext+="<br><span style='color: lime'>>> </span>"+name+" joined the chat.";	
+		}
         personList.push(person);
         io.emit('message',totaltext);
         io.emit('updatedata',personList);
     });
     socket.on('disconnected',function(name){
-        totaltext+="<br>"+name+" left the chat.";
+        totaltext+="<br><span style='color: red'><< </span>"+name+" left the chat.";
         personList.forEach(function(i){
             if(i.name===name){
                 personList.splice(personList.indexOf(i));     
             } 
         });
+		if(name==admin){
+			admin=null;
+		}
         io.emit('message',totaltext);
         io.emit('updatedata',personList);
     });
@@ -116,7 +116,7 @@ io.on('connection', function(socket) {
         }
         io.emit('updatedata',personList);
     });
-    socket.on('impose',function(name,data){
+    socket.on('pretend',function(name,data){
         if(name==admin){
             var nameExists = false;
             personList.forEach(function(i){
@@ -143,6 +143,28 @@ io.on('connection', function(socket) {
             });   
         }; 
     });
+	socket.on('clearchat',function(name,data){
+		if(name==admin){
+			totaltext = "Chat was cleared. (Clear by admin)"
+			io.emit('message',totaltext);
+		}
+	});
+	socket.on('admin',function(name,data){
+	//	console.log(admin);
+	//	console.log(data);
+		if(admin==null&&data=="asdf"){
+		//	console.log('admin free');
+			admin = name;
+	//		console.log(name);
+	//		console.log(personList);
+			personList.forEach(function(i){
+				if(i.name===name){
+					i.rank="admin";
+				}
+			});
+		}
+		io.emit('updatedata',personList);
+	});
     socket.on("banned", function(name){
         personList.forEach(function(i){
             if(i.name===name){
@@ -154,4 +176,10 @@ io.on('connection', function(socket) {
         io.emit('updatedata',personList);
     });
 });
-setInterval(function(){io.emit('updatedata',personList);},100);
+setInterval(function(){
+	io.emit('updatedata',personList);
+},100);
+setInterval(function(){
+	totaltext = "Chat was cleared. (Clear by system)"
+	io.emit('message',totaltext);
+}, 600000);
