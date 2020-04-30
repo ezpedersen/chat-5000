@@ -6,9 +6,13 @@
     </head>
     <body>
         <div id="server">
+			<span class="chatheader">Public Chat</span>
+			<span class="chatheader">Personal Messages</span>
             <div id="chat" readonly></div>
+			<div id="consolemessages"></div>
             <input id="input" placeholder="Enter Message Here" maxlength="150">
-            <button onclick="send()" id="send">Send</button>
+            <button onclick="send()">Send</button>
+			<button onclick="people()">People</button>
         </div>
         <div id="banned">
             <h1>Looks Like You've Been Removed From The Server!</h1>
