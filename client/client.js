@@ -23,19 +23,25 @@ socket.on('updatedata',function(data){
 });
 function send(){
 	var msg = document.getElementById("input").value;
-	if(msg!==""){
+	if(msg.trim()!==""){
 		if(msg.charAt(0)=="/"){
 			if(msg.substr(1,4)=='ban:'){
 				socket.emit('ban',name,msg.substr(5,msg.length-1));
 			}
-			if(msg.substr(1,7)=='impose:'){
-				socket.emit('impose',name,msg.substr(8,msg.length-1));
+			if(msg.substr(1,8)=='pretend:'){
+				socket.emit('pretend',name,msg.substr(9,msg.length-1));
 			}
 			if(msg.substr(1,8)=='promote:'){
 				socket.emit('promote',name,msg.substr(9,msg.length-1));
 			}
 			if(msg.substr(1,7)=='demote:'){
 				socket.emit('demote',name,msg.substr(8,msg.length-1));
+			}
+			if(msg.substr(1,msg.length)=='clearchat'){
+				socket.emit('clearchat',name);
+			}
+			if(msg.substr(1,6)=='admin:'){
+				socket.emit('admin',name,msg.substr(7,msg.length-1));
 			}
 			document.getElementById("input").value = ""; 
 		}
@@ -54,6 +60,27 @@ function send(){
 			document.getElementById("input").value = "";     
 		} 
 	}
+}
+function people(){
+	var nameList = [];
+	personList.forEach(function(i){
+		var fullName = i.name;
+		if(i.rank == "vip"){
+			fullName = "<span style='color:lime; font-weight: bold;'>|VIP| "+ i.name+"</span>";
+		}
+		else if(i.rank == "spit"){
+			fullName = "<span style='color:brown; text-decoration: underline'>(spit on me) "+i.name+"</span>";
+		}
+		else if(i.rank == "coolkid"){
+			fullName = "<span style='color:DarkTurquoise; font-weight: bold;'>{Cool Kid} "+i.name+"</span>"; 
+		}
+		else if(i.rank == "admin"){
+			fullName = "<span style='color:darkred; font-weight: bold;'>[ADMIN] "+i.name+"</span>"; 
+		}
+		nameList.push(" "+fullName);
+	});
+	document.getElementById('consolemessages').innerHTML += "People:" + nameList + "<br>";
+	document.getElementById("consolemessages").scrollTop = document.getElementById("consolemessages").scrollHeight;
 }
 var name;
 setTimeout(function(){name = prompt("What's your name?");allowaccess();},200);
@@ -77,7 +104,7 @@ function allowaccess(){
 			allowaccess();
 		}
 		for(var i = 0; i <name.length;i++){
-			console.log(name[i]);
+			//console.log(name[i]);
 			if(name[i]==":"){
 				name = prompt("You can't have : in your name");
 				isnameinvalid=true;
