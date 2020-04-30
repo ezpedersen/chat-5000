@@ -22,7 +22,7 @@ io.on('connection', function(socket) {
         person.name = name;
         person.impostername = "";
         person.rank = "";
-		if(personList == []){
+		if(totaltext == ""){
 			totaltext+="<span style='color: lime'>>> </span>"+name+" joined the chat.";
 		}
 		else{
